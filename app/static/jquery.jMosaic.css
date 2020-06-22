@@ -1,0 +1,16 @@
+/*
+ * jQuery jMosaic plugin 0.1.3 
+ * https://github.com/absentik/jMosaic
+ * 
+ * Author: Seleznev Alexander (ABSENT) 
+ * Email: absenteg@gmail.com 
+ * Website: http://whoisabsent.ru 
+ *  
+ * Licensed under the MIT license. 
+ * http://www.opensource.org/licenses/mit-license.php 
+ */
+
+.jMosaic-clear { clear: both; }
+.jMosaic-selector { clear: both; position: relative; }
+.jMosaic-selector > .jMosaic-item { display: block; float: left; position: relative; overflow: hidden; width: auto; }
+.jMosaic-selector > .jMosaic-item:hover, .jMosaic-selector > .jMosaic-item:focus { }

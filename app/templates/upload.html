@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片搜索</title>
+    <link rel="icon" type="image/png" sizes="144x144" href="{{ url_for('static', filename = 'Icon.png', _external = True) }}"/>
+    <style type="text/css">
+        body{
+            margin: 0;
+        }
+		/*nav css*/
+		.nav{
+			background-image:url({{ url_for('static', filename = 'timg.jpg', _external = True) }});
+
+		}
+        .box{
+            height:500px;
+             display:flex;
+             justify-content:center;
+             align-items:center;
+            {#padding-top: 8%;#}
+        }
+
+		.nav_title{
+			background-color:#0f1932;
+			height:20px;
+            opacity: .3;
+		}
+		.a1{
+			float:left;
+			padding-top:2px;
+			padding-left:20px;
+		}
+
+		.a2{
+			float:right;
+			padding-top:2px;
+			padding-right:20px;
+		}
+
+        #input{
+            width: 100%;
+            {#height: 50px;#}
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0 20px;
+            line-height: 50px;
+            border: 0;
+            outline: 0;
+            font-size: 14px;
+            -webkit-appearance: none;
+            color: #fff;
+            font-family: arial;
+            background: none;
+            border: 2px solid #ffffff;
+
+        }
+
+        #text-title{
+            top: 146px;
+            color: #fff;
+            font-size: 60px;
+            text-align: center;
+            letter-spacing: 8px;
+            font-weight: 600;
+        }
+
+        #text-context{
+            top: 146px;
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 8px;
+            font-weight: 200;
+            margin-top: 15px;
+            margin-bottom: 45px;
+
+        }
+
+        .div-button{
+            width: 122px;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            border-right: 2px solid #fff;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            color: #fff;
+            float: left;
+            cursor: pointer;
+            position: relative;
+        }
+        #input-file{
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            vertical-align: top;
+            opacity: 0;
+            position:absolute;
+            left: 0px;
+        }
+        #loading{
+            width: 600px;
+            height: 100px;
+            border: 2px solid #fff;
+             display:none;
+             justify-content:center;
+             align-items:center;
+            color: #868686;
+        }
+
+
+        #box-0 {
+          margin: auto;
+          position: relative;
+        }
+
+        .box-1 {
+          float: left;
+          padding: 10px;
+          border: 1px solid #ccc;
+          background: #f7f7f7;
+          box-shadow: 0 0 8px #ccc;
+        }
+
+        .box-1:hover { box-shadow: 0 0 10px #999; }
+
+        .box-1 img { width: 200px; }
+	</style>
+    <style>
+    .masonry {
+        margin: auto;
+        width: 85%;
+        position: relative;
+    }
+
+    .item {
+     z-index: 10;
+      transition: .25s;
+      overflow: hidden;
+      position: absolute;
+	  padding: 10px;
+	  border: 1px solid #ccc;
+	  background: #f7f7f7;
+	  box-shadow: 0 0 8px #ccc;
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      transition: .25s;
+    }
+
+    .item:hover img {
+      z-index: 100;
+      transition: .25s;
+      overflow: hidden;
+      animation: bounceIn .25s ease-in 2 alternate;
+    }
+
+    @keyframes bounceIn {
+      100% {
+        transform: scale(1.07);
+      }
+    }
+  </style>
+</head>
+<style type="text/css">
+
+</style>
+<script src="{{ url_for('static', filename = 'jquery.min.js', _external = True) }}"></script>
+<body>
+    <div class="nav">
+		<div class="nav_title">
+{#			<a href="" style="color:#fddd9b;font-size:13px;text-decoration:none;" class="a1">IPv6页面</a>#}
+{##}
+{#			<a href="http://keyblog.cn" style="color:#fddd9b;font-size:13px;text-decoration:none;" class="a2">首页</a>#}
+{#			<a href="/tools.html" style="color:#fddd9b;font-size:13px;text-decoration:none;" class="a2">返回工具</a>#}
+		</div>
+        <div class="box">
+            <div style="display: block;">
+                <div id="text-title">图像搜索 搜你所想</div>
+                <div id="text-context">万绿丛中一点红，动人春色不须多</div>
+                <div id="box-img">
+                    <div id="image" style="float: left;width: 400px;">
+                       <input id="input" placeholder="拖拽图片到此处或粘贴图片网址">
+                    </div>
+
+                    <div id="download" class="div-button">
+                        搜索图片
+                    </div>
+                    <div class="div-button">
+                        <span>本地上传</span>
+                        <input id="input-file" name="file" type="file" accept="image/*">
+                    </div>
+                </div>
+                <div id="loading">
+                    <div id="loading-context">
+                       <img src="{{ url_for('static', filename = '041.gif', _external = True) }}">
+                        <span>正在识别，请稍候...</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+	</div>
+
+    <div class="masonry" style="clear:both;">
+        {% for item in list %}
+            <div class="item">
+              <img class="lazy" src="{{ '/show/' }}{{ item }}" alt="">
+            </div>
+
+        {% endfor %}
+
+     <script>
+
+    //瀑布流效果
+    //这里有一个坑（已经修复）：
+    //因为是动态加载远程图片，在未加载完全无法获取图片宽高
+    //未加载完全就无法设定每一个item(包裹图片)的top。
+
+    //item的top值：第一行：top为0
+    //            其他行：必须算出图片宽度在item宽度的缩小比例，与获取的图片高度相乘，从而获得item的高度
+    //                   就可以设置每张图片在瀑布流中每块item的top值（每一行中最小的item高度，数组查找）
+    //item的left值：第一行：按照每块item的宽度值*块数
+    //             其他行：与自身上面一块的left值相等
+    function waterFall() {
+      // 1- 确定图片的宽度 - 滚动条宽度
+      var pageWidth = getClient().width - 8;
+      var columns = 3; //3列
+      var itemWidth = parseInt(pageWidth / columns); //得到item的宽度
+      $(".item").width(itemWidth-30); //设置到item的宽度
+
+      var arr = [];
+
+      $(".masonry .item").each(function (i) {
+        var height = $(this).find("img").height()+20;
+        var width = $(this).find("img").width();
+        var bi = itemWidth / width; //获取缩小的比值
+        var boxheight = parseInt(height * bi); //图片的高度*比值 = item的高度
+
+        if (i < columns) {
+          // 2- 确定第一行
+          $(this).css({
+            top: 0,
+            left: (itemWidth) * i
+          });
+          arr.push(boxheight);
+
+        } else {
+          // 其他行
+          // 3- 找到数组中最小高度  和 它的索引
+          var minHeight = arr[0];
+          var index = 0;
+          for (var j = 0; j < arr.length; j++) {
+            if (minHeight > arr[j]) {
+              minHeight = arr[j];
+              index = j;
+            }
+          }
+          // 4- 设置下一行的第一个盒子位置
+          // top值就是最小列的高度
+          $(this).css({
+            top: arr[index],
+            left: $(".masonry .item").eq(index).css("left")
+          });
+
+          // 5- 修改最小列的高度
+          // 最小列的高度 = 当前自己的高度 + 拼接过来的高度
+          arr[index] = arr[index] + boxheight;
+        }
+      });
+    }
+
+    //clientWidth 处理兼容性
+    function getClient() {
+      return {
+        width: $(".masonry").width(),
+        height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      }
+    }
+
+    // 页面尺寸改变时实时触发
+    window.onresize = function () {
+      //重新定义瀑布流
+      waterFall();
+    };
+
+    //初始化
+    window.onload = function () {
+      //实现瀑布流
+      waterFall();
+    }
+  </script>
+
+
+  </div>
+
+    <!--图片显示插件-->
+	<script src="https://cdn.bootcdn.net/ajax/libs/waterfall.js/1.1.0/waterfall.min.js"></script>
+
+
+	<script type="text/javascript">
+
+		$("#box-0").waterfall({
+          itemClass: ".box-1",
+          {#minColCount: 2,#}
+          {#spacingHeight: 10,#}
+          {#resizeable: true,#}
+            auto_imgHeight:true,
+          insert_type:1
+        });
+
+    </script>
+
+</body>
+<script type="text/javascript">
+
+    //文件上传
+    function upload_cover(file){
+        $("#box-img").css("display","none");
+        $("#loading").css("display","flex");
+        var cover = new FormData();
+        cover.append('cover', file)
+        $.ajax({
+            type: 'post',
+            url: '/up_image',
+            data: cover,
+            async: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                {#alert(data)#}
+                window.location.href=data;
+            },
+        });
+    }
+
+    //网络下载图片
+    $("#download").click(function (){
+
+        $.ajax({
+            type: 'post',
+            url: '/download',
+            data: {
+                url: $("#input").val()
+            },
+            success: function (data) {
+                window.location.href=data;
+            },
+        });
+    });
+
+
+    //本地上传
+    $("#input-file").change(function () {
+        file=document.getElementById("input-file").files[0];
+        upload_cover(file);
+    });
+
+     $(function(){
+        //阻止浏览器默认行为。
+        $(document).on({
+            dragleave:function(e){    //拖离
+                e.preventDefault();
+            },
+            drop:function(e){  //拖后放
+                e.preventDefault();
+            },
+            dragenter:function(e){    //拖进
+                e.preventDefault();
+            },
+            dragover:function(e){    //拖来拖去
+                e.preventDefault();
+            }
+        });
+
+        var box = document.getElementById('image'); //拖拽区域
+
+        box.addEventListener("drop",function(e){
+            e.preventDefault(); //取消默认浏览器拖拽效果
+            var fileList = e.dataTransfer.files[0]; //获取文件对象
+            //检测是否是拖拽文件到页面的操作
+            if(fileList.length == 0){
+                return false;
+            }
+            upload_cover(fileList);
+        },false);
+    });
+
+
+
+</script>
+
+</html>

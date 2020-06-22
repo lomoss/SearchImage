@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>识别结果</title>
+    <link rel="icon" type="image/png" sizes="144x144" href="{{ url_for('static', filename = 'Icon.png', _external = True) }}"/>
+    <style>
+        .box {
+            margin: 10px;
+            column-count: 3;
+            column-gap: 10px;
+        }
+        .item {
+            margin-bottom: 10px;
+        }
+        .item img{
+            width: 100%;
+            height:100%;
+        }
+
+        .deatil{
+            position:absolute;
+            top:5px;
+            left:15px;
+            color: white;
+        }
+        .item:hover .deatil{
+            {#display: block;#}
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+     {% for item in my_list %}
+         <div class="item" style="position:relative;">
+            <img  src="{{ '/show/' }}{{ item.id }}" alt="" />
+             <div class="deatil">
+                 <h2>相似度</h2>
+                 <p>{{ "{0:.2f}".format((1-item.distance)*100)}}{{ '%'  }}</p>
+              </div>
+        </div>
+
+{#          <li>#}
+{#              <div class="deatil">#}
+{#                 <h2>相似度</h2>#}
+{#                 <p>{{ "{0:.2f}".format((1-item.distance)*100)}}{{ '%'  }}</p>#}
+{#              </div>#}
+{#              <img src="{{ '/show/' }}{{ item.id }}" width="160px" alt=""/>#}
+{#          </li>#}
+    {% endfor %}
+
+</div>
+</body>
+
+</html>
