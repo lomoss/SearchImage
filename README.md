@@ -54,6 +54,10 @@ milvus安装： https://www.milvus.io/cn/docs/v0.10.0/guides/get_started/install
 
 3.运行manage.py
 
+![Image text](https://github.com/lomoss/SearchImage/blob/master/img-folder/0.png?raw=true)
+
 # 项目展示：
 
-![Image text](https://s1.ax1x.com/2020/06/22/N8vYNQ.png)
+![Image text](https://github.com/lomoss/SearchImage/blob/master/img-folder/1.png?raw=true)
+
+![Image text](https://github.com/lomoss/SearchImage/blob/master/img-folder/2.png?raw=true)
